@@ -17,6 +17,7 @@ const config = {
 				base: "#f3f5f8",
 				accent: "#524FA1",
 				"rgb-gray": "rgb(201, 202, 204)",
+				filter: "#5e5f61",
 			},
 		},
 	},
