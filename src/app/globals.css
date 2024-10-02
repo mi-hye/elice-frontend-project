@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+	.layout-center {
+		@apply flex items-center justify-center;
+	}
+}
+
 body {
 	color: #5e5f61;
 	background: #f3f5f8;

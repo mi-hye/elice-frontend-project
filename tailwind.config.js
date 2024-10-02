@@ -1,16 +1,22 @@
 const config = {
 	content: [
-		"./app/**/*.{js,ts,jsx,tsx,mdx}", // Note the addition of the `app` directory.
+		"./app/**/*.{js,ts,jsx,tsx,mdx}",
 		"./pages/**/*.{js,ts,jsx,tsx,mdx}",
 		"./components/**/*.{js,ts,jsx,tsx,mdx}",
-
-		// Or if using `src` directory:
 		"./src/**/*.{js,ts,jsx,tsx,mdx}",
 	],
 	theme: {
+		container: {
+			center: true,
+			screens: {
+				xl: "1280px",
+			},
+		},
 		extend: {
 			colors: {
-				base: "#f3f5f8", // 사용자 정의 색상 추가
+				base: "#f3f5f8",
+				accent: "#524FA1",
+				"rgb-gray": "rgb(201, 202, 204)",
 			},
 		},
 	},
