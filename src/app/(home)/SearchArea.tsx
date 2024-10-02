@@ -21,7 +21,7 @@ export default function SearchArea() {
 	return (
 		<div
 			tabIndex={0}
-			className="layout-center flex-row-reverse m-3 relative z-10 group bg-white border border-rgb-gray rounded focus-within:border-accent"
+			className="layout-center flex-row-reverse m-3 bg-white border border-rgb-gray rounded focus-within:border-accent"
 		>
 			<input
 				type="text"
