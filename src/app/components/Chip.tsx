@@ -1,12 +1,11 @@
 "use client";
-import { useRouter } from "next/navigation";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
+import useCustomSearchParams from "../hooks/useCustomSearchParams";
 
 type Props = {
 	type: keyof QueryMap;
 	tag: string;
 	index: number;
-	paramsRef: React.RefObject<URLSearchParams>;
 };
 type QueryMap = typeof queryMap;
 
@@ -20,23 +19,27 @@ const queryMap = {
 	가격: "price",
 };
 
-function Chip({ type, tag, index, paramsRef }: Props) {
+function Chip({ type, tag, index }: Props) {
+	const { newParams, setSearchParams } = useCustomSearchParams();
 	const [isSelected, setIsSelected] = useState(false);
-	// const router = useRouter();
-
-	// const searchParams = useSearchParams();
-	// console.log("searchParams: ", newSearchParams);
-
 	const handleSelected = () => {
 		setIsSelected(!isSelected);
 	};
 
 	useEffect(() => {
-		if (isSelected) {
-			paramsRef.current?.append(`${queryMap[type]}`, index.toString());
-			console.log("newSearchParams: ", paramsRef.current);
+		setSearchParams(`${queryMap[type]}`, index.toString(), isSelected);
+	}, [isSelected, newParams.size]);
+
+	useEffect(() => {
+		if (newParams.size) {
+			const paramsList = [...newParams.entries()];
+
+			paramsList.forEach(([k, v]) => {
+				const findedItem = Object.entries(queryMap).find(([_, query]) => query === k) || [];
+				if (findedItem[0] === type && v === index.toString()) setIsSelected(true);
+			});
 		}
-	}, [isSelected]);
+	}, []);
 
 	return (
 		<div
