@@ -1,16 +1,62 @@
-import Chip from "../../components/Chip";
+"use client";
+import { useRef } from "react";
+import ListItem from "./ListItem";
 
-export default function FilterList({ type, tags }: { type: string; tags: Array<string> }) {
+type FilterType = "유형" | "진행 방식" | "분야" | "난이도" | "언어" | "가격";
+const FILTER_DATA = [
+	{
+		type: "유형",
+		tags: ["과목", "챌린지", "테스트"],
+	},
+	{
+		type: "진행 방식",
+		tags: ["자유 선택형", "순차 완료형"],
+	},
+	{
+		type: "분야",
+		tags: ["프로그래밍 기초", "데이터 분석", "웹", "인공지능", "알고리즘"],
+	},
+	{
+		type: "난이도",
+		tags: ["입문", "초급", "중급", "고급", "심화"],
+	},
+	{
+		type: "언어",
+		tags: [
+			"C",
+			"C++",
+			"자바",
+			"파이썬",
+			"자바스크립트",
+			"R",
+			"HTML/CSS",
+			"SQL",
+			"아두이노",
+			"스크래치",
+			"코틀린",
+			"스위프트",
+			"엔트리",
+		],
+	},
+	{
+		type: "가격",
+		tags: ["무료", "유료", "구독", "학점"],
+	},
+];
+
+export default function FilterList() {
+	const paramsRef = useRef(new URLSearchParams());
+
 	return (
-		<div className="min-h-[48px] flex text-filter border">
-			<div className="flex justify-start pl-4 w-[94px] bg-base layout-center font-bold text-xs border-r">
-				{type}
-			</div>
-			<div className="flex items-center w-full flex-wrap gap-2 bg-white text-sm p-3">
-				{tags.map((tag) => (
-					<Chip key={tag} tag={tag} />
-				))}
-			</div>
+		<div>
+			{FILTER_DATA.map((row) => (
+				<ListItem
+					key={row.type}
+					type={row.type as FilterType}
+					tags={row.tags}
+					paramsRef={paramsRef}
+				/>
+			))}
 		</div>
 	);
 }
