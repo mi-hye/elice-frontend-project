@@ -1,5 +1,19 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
+interface CourseRes {
+	id: number;
+	enroll_type: 0 | 4;
+	title: string;
+	short_description: string;
+	class_type: 0 | 4;
+	logo_file_url: string;
+	image_file_url: string;
+	leaderboard_info: [Object];
+	is_free: boolean;
+}
+
+const eliceApi = process.env.ELICE_API;
+
 const filter_conditions = JSON.stringify({
 	$and: [
 		{ title: "%%" },
@@ -14,12 +28,27 @@ const filter_conditions = JSON.stringify({
 
 async function getData() {
 	const res = await fetch(
-		`https://api-rest.elice.io/org/academy/course/list/?filter_conditions=${filter_conditions}&sort_by=created_datetime.desc&offset=0&count=12`
+		`${eliceApi}/?filter_conditions=${filter_conditions}&sort_by=created_datetime.desc&offset=0&count=12`
 	);
 	return res.json();
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-	const data: unknown = await getData();
-	res.status(200).json(data);
+	const data = await getData();
+	const parsedData = data.courses.map((course: CourseRes) => ({
+		id: course.id,
+		title: course.title,
+		imgUrl: course.image_file_url,
+		logoUrl: course.logo_file_url,
+		classType: course.class_type,
+		description: course.short_description,
+		enrollType: course.enroll_type,
+		isFree: course.is_free,
+	}));
+
+	const resData = {
+		courseCount: data.course_count,
+		courses: parsedData,
+	};
+	res.status(200).json(resData);
 }
