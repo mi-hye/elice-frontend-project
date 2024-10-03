@@ -1,24 +1,9 @@
 import Card from "@/app/components/Card";
+import PageNavigation from "./PageNavigation";
+import { fetchCourses, type Course } from "@/app/helper/fetchCourses";
 
-interface Course {
-	id: number;
-	title: string;
-	imgUrl: string;
-	logoUrl: string;
-	classType: number;
-	description: string;
-	enrollType: number;
-	isFree: boolean;
-}
-
-const apiURL = process.env.NEXT_PUBLIC_API_URL;
-
-async function getCourses() {
-	const res = await fetch(`${apiURL}/api/course`);
-	return res.json();
-}
 export default async function FilterBody() {
-	const { courseCount, courses } = await getCourses();
+	const { courseCount, courses } = await fetchCourses();
 
 	return (
 		<>
@@ -31,6 +16,9 @@ export default async function FilterBody() {
 				{courses.map((course: Course) => (
 					<Card key={course.id} course={course} />
 				))}
+			</div>
+			<div>
+				<PageNavigation courseCount={courseCount} />
 			</div>
 		</>
 	);
