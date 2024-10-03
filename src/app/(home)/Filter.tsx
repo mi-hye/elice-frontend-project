@@ -1,4 +1,5 @@
-import FilterList from "./FilterList";
+import FilterBody from "./(Filter)/FilterBody";
+import FilterList from "./(Filter)/FilterList";
 
 const FILTER_DATA = [
 	{
@@ -44,9 +45,12 @@ const FILTER_DATA = [
 export default async function Filter() {
 	return (
 		<div className="">
-			{FILTER_DATA.map((row) => (
-				<FilterList key={row.type} type={row.type} tags={row.tags} />
-			))}
+			<div>
+				{FILTER_DATA.map((row) => (
+					<FilterList key={row.type} type={row.type} tags={row.tags} />
+				))}
+			</div>
+			<FilterBody />
 		</div>
 	);
 }

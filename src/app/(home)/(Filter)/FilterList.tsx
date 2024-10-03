@@ -1,4 +1,4 @@
-import Chip from "../components/Chip";
+import Chip from "../../components/Chip";
 
 export default function FilterList({ type, tags }: { type: string; tags: Array<string> }) {
 	return (
