@@ -1,4 +1,4 @@
-import Chip from "../../components/Chip";
+import Chip from "./(FilterList)/Chip";
 
 type FilterType = "유형" | "진행 방식" | "분야" | "난이도" | "언어" | "가격";
 type Props = { type: FilterType; tags: Array<string> };

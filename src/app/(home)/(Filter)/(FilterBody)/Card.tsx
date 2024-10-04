@@ -1,19 +1,4 @@
-interface Tag {
-	id: number;
-	tag_type: number;
-	name: string;
-}
-
-interface Course {
-	id: number;
-	title: string;
-	imgUrl: string | null;
-	logoUrl: string;
-	description: string;
-	enrollType: number;
-	isFree: boolean;
-	tags: Array<Tag>;
-}
+import { type Course, type Tag } from "../helper/fetchCourses";
 
 type TageMap = {
 	[k: string]: string;
@@ -41,7 +26,7 @@ export default function Card({ course }: { course: Course }) {
 				<div>
 					<label className="text-[#524fa1] text-xs font-bold leading-[1.6]">
 						{course.tags.length
-							? course.tags.map((tag) => {
+							? course.tags.map((tag: Tag) => {
 									if (course.tags.find((tag) => tag.tag_type === 3)) {
 										if (tag.tag_type === 3) {
 											return tagMap[tag.id];

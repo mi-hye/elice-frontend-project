@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import useCustomSearchParams from "../hooks/useCustomSearchParams";
+import useCustomSearchParams from "../../../hooks/useCustomSearchParams";
 
 type Props = {
 	type: keyof QueryMap;

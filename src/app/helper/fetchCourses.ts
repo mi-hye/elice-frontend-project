@@ -6,12 +6,18 @@ interface Res {
 interface Course {
 	id: number;
 	title: string;
-	imgUrl: string;
+	imgUrl: string | null;
 	logoUrl: string;
-	classType: number;
 	description: string;
 	enrollType: number;
 	isFree: boolean;
+	tags: Array<Tag>;
+}
+
+interface Tag {
+	id: number;
+	tag_type: number;
+	name: string;
 }
 
 const apiURL = process.env.NEXT_PUBLIC_API_URL;
@@ -23,4 +29,4 @@ const fetchCourses: FetchCourse = async () => {
 };
 
 export { fetchCourses };
-export type { Course };
+export type { Course,Tag };

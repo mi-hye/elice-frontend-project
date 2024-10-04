@@ -1,5 +1,5 @@
-import Card from "@/app/components/Card";
-import PageNavigation from "./PageNavigation";
+import Card from "./(FilterBody)/Card";
+import PageNavigation from "./(FilterBody)/PageNavigation";
 import { fetchCourses, type Course } from "@/app/helper/fetchCourses";
 
 export default async function FilterBody() {
