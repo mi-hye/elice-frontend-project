@@ -3,10 +3,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect, useCallback, ChangeEvent } from "react";
 import useDebounce from "../hooks/useDebounce";
+import useCustomSearchParams from "../hooks/useCustomSearchParams";
 
 export default function SearchArea() {
 	const [search, setSearch] = useState("");
-	const debouncedValue = useDebounce<string>(search, 5000);
+	const debouncedValue = useDebounce<string>(search, 300);
+	const { newParams, setSearchParams } = useCustomSearchParams();
 
 	const handleInputChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
 		setSearch(e.target.value);
@@ -14,9 +16,14 @@ export default function SearchArea() {
 
 	useEffect(() => {
 		if (debouncedValue) {
-			console.log("검색 단어:", debouncedValue); // TODO 차후 API 추가 예정
+			setSearchParams("keyword", debouncedValue, true);
 		}
 	}, [debouncedValue]);
+
+	useEffect(() => {
+		const keywordValue = newParams.get("keyword");
+		if (keywordValue) setSearch(keywordValue);
+	}, []);
 
 	return (
 		<div

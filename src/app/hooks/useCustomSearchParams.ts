@@ -7,6 +7,13 @@ const useCustomSearchParams = () => {
 
 	const setSearchParams = (key: string, value: string, flag: boolean) => {
 		const paramsList = [...newParams.entries()];
+
+		if (key === "keyword") {
+			newParams.set(key, value);
+			router.push(`/?${newParams.toString()}`);
+			return;
+		}
+
 		if (flag) {
 			const exist = paramsList.find(([k, v]) => k === key && v === value);
 			if (!exist) {
