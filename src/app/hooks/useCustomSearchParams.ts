@@ -27,7 +27,7 @@ const useCustomSearchParams = () => {
 		router.push(`/?${new URLSearchParams(deletedParams).toString()}`);
 	};
 
-	return { newParams, setSearchParams };
+	return { newParams, setSearchParams, searchParams };
 };
 
 export default useCustomSearchParams;

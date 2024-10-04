@@ -5,19 +5,21 @@ import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import Card from "./(FilterBody)/Card";
 import PageNavigation from "./(FilterBody)/PageNavigation";
 import { fetchCourses, type Course, type Res } from "@/app/helper/fetchCourses";
+import useCustomSearchParams from "@/app/hooks/useCustomSearchParams";
 
 const OFFSET_COUNT = 12;
 
 export default function FilterBody() {
 	const [page, setPage] = useState(1);
 	const [data, setData] = useState<Res | undefined>();
+	const { searchParams } = useCustomSearchParams();
 
 	useEffect(() => {
 		(async () => {
-			const fetchedData = await fetchCourses((page - 1) * OFFSET_COUNT);
+			const fetchedData = await fetchCourses((page - 1) * OFFSET_COUNT, searchParams.toString());
 			setData(fetchedData);
 		})();
-	}, [page]);
+	}, [page, searchParams]);
 
 	if (!data)
 		return (
@@ -27,7 +29,7 @@ export default function FilterBody() {
 			</div>
 		);
 
-	const { courseCount, courses } = data!;
+	const { courseCount, courses } = data;
 	return (
 		<>
 			<div className="w-full my-1 h-full">

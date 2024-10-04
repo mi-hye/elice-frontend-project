@@ -21,11 +21,13 @@ interface Tag {
 }
 
 const apiURL = process.env.NEXT_PUBLIC_API_URL;
-type FetchCourse = (offset: number) => Promise<Res>;
+type FetchCourse = (offset: number, searchParams: string) => Promise<Res>;
 
-const fetchCourses: FetchCourse = async (offset: number) => {
+const fetchCourses: FetchCourse = async (offset, searchParams) => {
 	try {
-		const res = await fetch(`${apiURL}/api/course?offset=${offset}`);
+		const res = await fetch(
+			`${apiURL}/api/course?offset=${offset}${searchParams ? `&${searchParams}` : ""}`
+		);
 		if (!res.ok) throw new Error(`${(await res.json()).msg}`);
 		return await res.json();
 	} catch (error) {
