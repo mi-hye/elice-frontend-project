@@ -1,10 +1,33 @@
+"use client";
+import { useEffect, useState } from "react";
+import { FontAwesomeIcon as Spinner } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import Card from "./(FilterBody)/Card";
 import PageNavigation from "./(FilterBody)/PageNavigation";
-import { fetchCourses, type Course } from "@/app/helper/fetchCourses";
+import { fetchCourses, type Course, type Res } from "@/app/helper/fetchCourses";
 
-export default async function FilterBody() {
-	const { courseCount, courses } = await fetchCourses();
+const OFFSET_COUNT = 12;
 
+export default function FilterBody() {
+	const [page, setPage] = useState(1);
+	const [data, setData] = useState<Res | undefined>();
+
+	useEffect(() => {
+		(async () => {
+			const fetchedData = await fetchCourses((page - 1) * OFFSET_COUNT);
+			setData(fetchedData);
+		})();
+	}, [page]);
+
+	if (!data)
+		return (
+			<div className="w-full h-[500px] layout-center">
+				<Spinner icon={faSpinner} spin size="2x" />
+				<span className="m-5 text-lg font-extrabold">Loading...</span>
+			</div>
+		);
+
+	const { courseCount, courses } = data!;
 	return (
 		<>
 			<div className="w-full my-1 h-full">
@@ -18,8 +41,11 @@ export default async function FilterBody() {
 				))}
 			</div>
 			<div>
-				<PageNavigation courseCount={courseCount} />
+				<PageNavigation courseCount={courseCount} page={page} setPage={setPage} />
 			</div>
 		</>
 	);
+}
+function fetchedData(prevState: undefined): undefined {
+	throw new Error("Function not implemented.");
 }

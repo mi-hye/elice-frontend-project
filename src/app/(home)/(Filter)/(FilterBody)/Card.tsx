@@ -1,4 +1,4 @@
-import { type Course, type Tag } from "../helper/fetchCourses";
+import { type Course, type Tag } from "@/app/helper/fetchCourses";
 
 type TageMap = {
 	[k: string]: string;

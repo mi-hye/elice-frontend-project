@@ -1,7 +1,11 @@
-"use client";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+
+interface Props {
+	courseCount: number;
+	page: number;
+	setPage: React.Dispatch<React.SetStateAction<number>>;
+}
 
 const GRID_ITEM_COUNT = 12;
 const FIRST_NAVIGATION_NUM = 1;
@@ -15,11 +19,11 @@ const calculateNavigation = (currentPage: number, lastPage: number) => {
 	return [FIRST_NAVIGATION_NUM, LAST_NAVIGATION_NUM];
 };
 
-export default function PageNavigation({ courseCount }: { courseCount: number }) {
-	const [page, setPage] = useState(1);
+export default function PageNavigation({ courseCount, page, setPage }: Props) {
 	const lastPage = Math.ceil(courseCount / GRID_ITEM_COUNT);
 	const pages = Array.from({ length: lastPage }).map((_, i) => i + 1);
 	const [firstNum, lastNum] = calculateNavigation(page, lastPage);
+
 	return (
 		<div className="flex justify-center my-5 font-bold">
 			<button

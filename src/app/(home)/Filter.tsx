@@ -11,7 +11,7 @@ export default async function Filter() {
 					<FilterList key={row.type} type={row.type as FilterType} tags={row.tags} />
 				))}
 			</div>
-			<FilterBody />
+				<FilterBody />
 		</div>
 	);
 }
