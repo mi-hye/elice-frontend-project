@@ -39,6 +39,7 @@ function Chip({ type, tag, index }: Props) {
 				if (findedItem[0] === type && v === index.toString()) setIsSelected(true);
 			});
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (
