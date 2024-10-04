@@ -21,12 +21,12 @@ interface Tag {
 }
 
 const apiURL = process.env.NEXT_PUBLIC_API_URL;
-type FetchCourse = () => Promise<Res>;
+type FetchCourse = (offset: number) => Promise<Res>;
 
-const fetchCourses: FetchCourse = async () => {
-	const res = await fetch(`${apiURL}/api/course`);
+const fetchCourses: FetchCourse = async (offset: number) => {
+	const res = await fetch(`${apiURL}/api/course?offset=${offset}`);
 	return res.json();
 };
 
 export { fetchCourses };
-export type { Course,Tag };
+export type { Course, Tag, Res };

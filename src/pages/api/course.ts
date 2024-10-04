@@ -1,9 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-interface Tag{
-	id:number;
-	tag_type:number;
-	name:string
+interface Tag {
+	id: number;
+	tag_type: number;
+	name: string;
 }
 interface CourseRes {
 	id: number;
@@ -56,7 +56,7 @@ const filter_conditions = JSON.stringify(
 	// }
 );
 
-async function getData(offset = 0) {
+async function getData(offset = "0") {
 	const res = await fetch(
 		`${eliceApi}/?filter_conditions=${filter_conditions}&sort_by=created_datetime.desc&offset=${offset}&count=12`
 	);
@@ -64,8 +64,7 @@ async function getData(offset = 0) {
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-	const data = await getData();
-	// console.log("data: ", data);
+	const data = await getData(req.query.offset as string);
 
 	const parsedData = data.courses.map((course: CourseRes) => ({
 		id: course.id,
