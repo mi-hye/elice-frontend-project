@@ -28,14 +28,14 @@ function Chip({ type, tag, index }: Props) {
 
 	useEffect(() => {
 		setSearchParams(`${queryMap[type]}`, index.toString(), isSelected);
-	}, [isSelected, newParams.size]);
+	}, [index, isSelected, newParams.size, setSearchParams, type]);
 
 	useEffect(() => {
 		if (newParams.size) {
 			const paramsList = [...newParams.entries()];
 
 			paramsList.forEach(([k, v]) => {
-				const findedItem = Object.entries(queryMap).find(([_, query]) => query === k) || [];
+				const findedItem = Object.entries(queryMap).find(([, query]) => query === k) || [];
 				if (findedItem[0] === type && v === index.toString()) setIsSelected(true);
 			});
 		}

@@ -1,7 +1,7 @@
 import FilterBody from "./(Filter)/FilterBody";
 import FilterList from "./(Filter)/FilterList";
 
-type FilterType = "유형" | "진행 방식" | "분야" | "난이도" | "언어" | "가격";
+export type FilterType = "유형" | "진행 방식" | "분야" | "난이도" | "언어" | "가격";
 
 export default async function Filter() {
 	return (
