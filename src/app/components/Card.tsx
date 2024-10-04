@@ -1,15 +1,31 @@
+interface Tag {
+	id: number;
+	tag_type: number;
+	name: string;
+}
+
 interface Course {
 	id: number;
 	title: string;
 	imgUrl: string | null;
 	logoUrl: string;
-	classType: number;
 	description: string;
 	enrollType: number;
 	isFree: boolean;
+	tags: Array<Tag>;
 }
 
-const classType = ["프로그래밍 기초"];
+type TageMap = {
+	[k: string]: string;
+};
+
+const tagMap: TageMap = {
+	12: "프로그래밍 기초",
+	13: "데이터 분석",
+	14: "웹",
+	22: "인공지능",
+	23: "알고리즘",
+};
 
 export default function Card({ course }: { course: Course }) {
 	return (
@@ -24,7 +40,16 @@ export default function Card({ course }: { course: Course }) {
 			<div className="py-[18px] px-[18px] flex flex-col flex-1 justify-between">
 				<div>
 					<label className="text-[#524fa1] text-xs font-bold leading-[1.6]">
-						{classType[course.classType]}
+						{course.tags.length
+							? course.tags.map((tag) => {
+									if (course.tags.find((tag) => tag.tag_type === 3)) {
+										if (tag.tag_type === 3) {
+											return tagMap[tag.id];
+										}
+									}
+									return "";
+							  })
+							: "미분류"}
 					</label>
 					<div className="text-black text-[16px] font-bold line-clamp-2 my-1">{course.title}</div>
 					<div className="w-full text-[14px] font-bold line-clamp-2 leading-[1.6]">
