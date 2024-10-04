@@ -6,7 +6,7 @@ import { useState } from "react";
 const GRID_ITEM_COUNT = 12;
 const FIRST_NAVIGATION_NUM = 1;
 const LAST_NAVIGATION_NUM = 5;
-const disable = "text-[#ccc] cursor-not-allowed";
+const disable = "disabled:text-[#ccc] disabled:cursor-not-allowed";
 
 const calculateNavigation = (currentPage: number, lastPage: number) => {
 	if (currentPage === lastPage) return [lastPage - 4, lastPage];
@@ -22,7 +22,11 @@ export default function PageNavigation({ courseCount }: { courseCount: number })
 	const [firstNum, lastNum] = calculateNavigation(page, lastPage);
 	return (
 		<div className="flex justify-center my-5 font-bold">
-			<button className={`layout-center mx-5 transition-colors ${page === 1 ? disable : ""}`}>
+			<button
+				className={`layout-center mx-5 transition-colors ${disable}`}
+				disabled={page === 1}
+				onClick={() => setPage(page - 1)}
+			>
 				<FontAwesomeIcon icon={faChevronLeft} size="1x" />
 			</button>
 			{pages.slice(firstNum - 1, lastNum).map((pageNum) => (
@@ -37,7 +41,9 @@ export default function PageNavigation({ courseCount }: { courseCount: number })
 				</div>
 			))}
 			<button
-				className={`layout-center mx-5 transition-colors ${page === lastPage ? disable : ""}`}
+				className={`layout-center mx-5 transition-colors ${disable}`}
+				disabled={page === lastPage}
+				onClick={() => setPage(page + 1)}
 			>
 				<FontAwesomeIcon icon={faChevronRight} size="1x" />
 			</button>
