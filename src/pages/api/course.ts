@@ -57,29 +57,33 @@ const filter_conditions = JSON.stringify(
 );
 
 async function getData(offset = "0") {
-	const res = await fetch(
-		`${eliceApi}/?filter_conditions=${filter_conditions}&sort_by=created_datetime.desc&offset=${offset}&count=12`
-	);
-	return res.json();
+		const res = await fetch(
+			`${eliceApi}/?filter_conditions=${filter_conditions}&sort_by=created_datetime.desc&offset=${offset}&count=12`
+		);
+		return res.json();
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-	const data = await getData(req.query.offset as string);
+	try {
+		const data = await getData(req.query.offset as string);
 
-	const parsedData = data.courses.map((course: CourseRes) => ({
-		id: course.id,
-		title: course.title,
-		imgUrl: course.image_file_url,
-		logoUrl: course.logo_file_url,
-		description: course.short_description,
-		enrollType: course.enroll_type,
-		isFree: course.is_free,
-		tags: course.tags,
-	}));
+		const parsedData = data.courses.map((course: CourseRes) => ({
+			id: course.id,
+			title: course.title,
+			imgUrl: course.image_file_url,
+			logoUrl: course.logo_file_url,
+			description: course.short_description,
+			enrollType: course.enroll_type,
+			isFree: course.is_free,
+			tags: course.tags,
+		}));
 
-	const resData = {
-		courseCount: data.course_count,
-		courses: parsedData,
-	};
-	res.status(200).json(resData);
+		const resData = {
+			courseCount: data.course_count,
+			courses: parsedData,
+		};
+		res.status(200).json(resData);
+	} catch (error) {
+		res.status(500).json({ msg: "서버 문제 발생" });
+	}
 }

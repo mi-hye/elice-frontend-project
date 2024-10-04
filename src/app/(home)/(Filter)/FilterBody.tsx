@@ -46,6 +46,3 @@ export default function FilterBody() {
 		</>
 	);
 }
-function fetchedData(prevState: undefined): undefined {
-	throw new Error("Function not implemented.");
-}

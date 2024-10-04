@@ -24,8 +24,13 @@ const apiURL = process.env.NEXT_PUBLIC_API_URL;
 type FetchCourse = (offset: number) => Promise<Res>;
 
 const fetchCourses: FetchCourse = async (offset: number) => {
-	const res = await fetch(`${apiURL}/api/course?offset=${offset}`);
-	return res.json();
+	try {
+		const res = await fetch(`${apiURL}/api/course?offset=${offset}`);
+		if (!res.ok) throw new Error(`${(await res.json()).msg}`);
+		return await res.json();
+	} catch (error) {
+		console.error(error);
+	}
 };
 
 export { fetchCourses };
