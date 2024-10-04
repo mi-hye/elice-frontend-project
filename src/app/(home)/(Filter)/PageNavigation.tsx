@@ -4,21 +4,31 @@ import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons
 import { useState } from "react";
 
 const GRID_ITEM_COUNT = 12;
+const FIRST_NAVIGATION_NUM = 1;
+const LAST_NAVIGATION_NUM = 5;
 const disable = "text-[#ccc] cursor-not-allowed";
+
+const calculateNavigation = (currentPage: number, lastPage: number) => {
+	if (currentPage === lastPage) return [lastPage - 4, lastPage];
+	if (currentPage > lastPage - 2) return [currentPage - 3, lastPage];
+	if (currentPage > 3) return [currentPage - 2, currentPage + 2];
+	return [FIRST_NAVIGATION_NUM, LAST_NAVIGATION_NUM];
+};
 
 export default function PageNavigation({ courseCount }: { courseCount: number }) {
 	const [page, setPage] = useState(1);
 	const lastPage = Math.ceil(courseCount / GRID_ITEM_COUNT);
 	const pages = Array.from({ length: lastPage }).map((_, i) => i + 1);
-
+	const [firstNum, lastNum] = calculateNavigation(page, lastPage);
 	return (
 		<div className="flex justify-center my-5 font-bold">
-			<button className={`layout-center mx-5 ${page === 1 ? disable : ""}`}>
+			<button className={`layout-center mx-5 transition-colors ${page === 1 ? disable : ""}`}>
 				<FontAwesomeIcon icon={faChevronLeft} size="1x" />
 			</button>
-			{pages.map((pageNum) => (
+			{pages.slice(firstNum - 1, lastNum).map((pageNum) => (
 				<div
-					className={`size-[24px] m-2 pb-1 layout-center cursor-pointer rounded-lg ${
+					key={pageNum}
+					className={`size-[25px] m-2 pb-1 layout-center cursor-pointer rounded-lg ${
 						page === pageNum ? "bg-accent text-white" : "text-[#ccc]"
 					}`}
 					onClick={() => setPage(pageNum)}
@@ -26,12 +36,10 @@ export default function PageNavigation({ courseCount }: { courseCount: number })
 					{pageNum}
 				</div>
 			))}
-			<button>
-				<FontAwesomeIcon
-					className={`layout-center mx-5 ${page === lastPage ? disable : ""}`}
-					icon={faChevronRight}
-					size="1x"
-				/>
+			<button
+				className={`layout-center mx-5 transition-colors ${page === lastPage ? disable : ""}`}
+			>
+				<FontAwesomeIcon icon={faChevronRight} size="1x" />
 			</button>
 		</div>
 	);
